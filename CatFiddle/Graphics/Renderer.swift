@@ -164,12 +164,16 @@ extension Renderer {
         pipelineStateDescriptor.vertexFunction = library.makeFunction(name: vertexFunction)
         pipelineStateDescriptor.fragmentFunction = library.makeFunction(name: fragmentFunction)
         colorAttachment.pixelFormat = pixelFormat
+        
+        // blending
         colorAttachment.isBlendingEnabled = true
         colorAttachment.alphaBlendOperation = .add
-        colorAttachment.sourceRGBBlendFactor = .one
-        colorAttachment.destinationRGBBlendFactor = .oneMinusSourceAlpha
         colorAttachment.sourceAlphaBlendFactor = .one
         colorAttachment.destinationAlphaBlendFactor = .oneMinusSourceAlpha
+
+        colorAttachment.rgbBlendOperation = .add
+        colorAttachment.sourceRGBBlendFactor = .sourceAlpha
+        colorAttachment.destinationRGBBlendFactor = .oneMinusSourceAlpha
 
         do {
             return try device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
